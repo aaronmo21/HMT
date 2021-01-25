@@ -12,6 +12,16 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
+
+//import routes
+const postRoutes = require('./routes/posts');
+const locationRoutes = require('./routes/locations')
+app.use('/posts', postRoutes);
+app.use('/locations', locationRoutes);
+
+
+
 app.get('/api/hello', (req, res) => {
   res.send({ express: 'Hello From Express' });
 });
@@ -23,12 +33,7 @@ app.post('/api/world', (req, res) => {
   );
 });
 
-//import routes
-const postsRoute = require('./routes/posts');
-app.use('/posts', postsRoute);
-
 //connect to db
-
 mongoose
 .connect(process.env.DB_CONNECTION, {
   useNewUrlParser: true,

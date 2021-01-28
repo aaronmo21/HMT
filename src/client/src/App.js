@@ -15,7 +15,8 @@ class App extends Component {
     entry2: [],
     setShowResults: false,
     result: [],
-    showCustomEntry: false
+    showCustomEntry: false,
+    decimalBlurb: false
   }
 
   getResponse = async() => {
@@ -30,12 +31,12 @@ class App extends Component {
     if(this.state.entry1.area && this.state.entry2.area){
       var temp = this.state.entry2.area / this.state.entry1.area;
       if(temp % 1 !== 0){
-        temp = Math.floor(temp);
+        this.setState({decimalBlurb: true});
       }      
     }
-    this.setState({ result: temp });
-    this.setState({ locationList: this.state.locationSearchRes });
-    this.setState({ showResults: true });
+    this.setState({ result: temp,
+      locationList: this.state.locationSearchRes,
+      showResults: true });
   }
 
   setShow = (x) => {
@@ -47,19 +48,15 @@ class App extends Component {
       .then(res => {
         this.setState({ 
         locationList: res,
-        locationSearchRes: res });
+        locationSearchRes: res
+        });
       })
   }
 
   render() {
-    const {locationList, locationSearchRes, entry1, entry2, result, showCustomEntry, showResults} = this.state;
-    // console.log("locationRes " + locationSearchRes);
-    // const items = locationSearchRes.map((o => 
-    //   ({...o})
-    // ));
-    // console.log("items " + items);
-    // const items2 = locationSearchRes.slice();
-    // console.log("items2 " + items2);
+    const {locationList, locationSearchRes, entry1, entry2, result, showCustomEntry, showResults, decimalBlurb} = this.state;
+    const texas = locationList.find(o => o.name === 'Texas');
+    console.log(texas)
     return (
       <Grommet theme={grommet}>
         <div className="App">
@@ -91,7 +88,7 @@ class App extends Component {
                   options={locationList}
                   labelKey="name"
                   valueKey="area"
-                  value={entry1.length < 1 ? locationList.find(o => o.name === 'Texas') : entry1}
+                  value={entry1.length < 1 ? texas : entry1}
                   size="xsmall"
                   margin="small"
                   onSearch={(searchText) => {
@@ -101,7 +98,8 @@ class App extends Component {
                   onChange={event => this.setState({
                     entry1: event.value,
                     locationList: locationSearchRes,
-                    showResults: false
+                    showResults: false,
+                    decimalBlurb: false
                   })}
                 />
               </div>
@@ -123,7 +121,8 @@ class App extends Component {
                   onChange={ev => this.setState({
                     entry2: ev.value,
                     locationList: locationSearchRes,
-                    showResults: false
+                    showResults: false,
+                    decimalBlurb: false
                   })}
                 />
               </div>
@@ -142,9 +141,10 @@ class App extends Component {
                 }
             </Box>
             <Box>
-              { this.state.showResults ? 
-                <Heading>{entry1} could fit into {entry2} {result} times!</Heading>
+              { showResults ? 
+                <Heading background="neutral"> {entry1.name} could fit into {entry2.name} {Math.floor(result)} times!</Heading>
               : null }
+              {decimalBlurb ? <Heading>({Math.round((result) * 100) /100} times to be exact.)</Heading> : null}
             </Box>
           </Main>
         </div>

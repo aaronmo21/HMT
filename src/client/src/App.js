@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
 import './App.css';
 
-import { Anchor, Nav, Button, Grommet, Header, Box, WorldMap, Main, Heading, Paragraph, Select, Layer } from 'grommet';
+import { Anchor, Nav, Button, Grommet, Header, Box, Markdown, Main, Heading, Paragraph, Select, Layer } from 'grommet';
 import { grommet } from 'grommet/themes';
 import CustomEntryCard from './CustomEntryCard';
+import { MapContainer, GeoJSON } from "react-leaflet";
+import mapData from "./mapdata/countries.json";
+import "leaflet/dist/leaflet.css"
 
 
 
@@ -19,12 +22,23 @@ class App extends Component {
     decimalBlurb: false
   }
 
+  countryStyle = {
+    fillColor: "purple",
+    fillOpacity: 1,
+    color: "black",
+    weight: 1
+  };
+
   getResponse = async() => {
     const response = await fetch('http://localhost:5000/locations');
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
 
     return body;
+  }
+
+  onEachLocation = (location, layer) => {
+    console.log(location.properties.ADMIN);
   }
 
   onCalculate = () => {
@@ -63,21 +77,28 @@ class App extends Component {
           <Header className="App-header" pad="small" align="center">
             <Nav direction="row">
               <Anchor label="Home" href="#" />
-              <Anchor label="Profile" href="#" />
+              <Anchor label="Countries" href="#" />
             </Nav>
+            <Paragraph>this is using the mercator projection.</Paragraph>
             <Box align="center">
-              <Paragraph alignSelf="center">Call out to API!</Paragraph>
+              <Markdown alignSelf="center">how many texases?</Markdown>
             </Box>
           </Header>
           
           <Main pad="large">
-            <div className="map-container" style={{height: '50%'}}>
-              <Box direction="row-responsive" align="center">
-                <WorldMap color="graph-1" margin="small" align="center"/>
-              </Box>
-            </div>
             <Box>
-              <Heading>HMT</Heading>
+            <div className="map-container" style={{height: '30%'}}>
+                <MapContainer style={{ height: "60vh" }} zoom={5} minZoom={2} center={[31, -100]} >
+                  <GeoJSON
+                    style={this.countryStyle}
+                    data={mapData.features}
+                    onEachFeature={this.onEachLocation}
+                  />
+                </MapContainer>
+            </div>
+            </Box>
+            <Box>
+              <Heading>Have you ever wondered...</Heading>
             </Box>
             <Box direction="row">
               <div>

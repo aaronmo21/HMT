@@ -19,7 +19,7 @@ class ResultsCard extends Component {
                         <Heading background="neutral"> {this.props.entry1.name} could fit into {this.props.entry2.name} {Math.floor(this.props.result)} times!</Heading>
                         {this.props.decimalBlurb ? <Heading>({Math.round((this.props.result) * 100) /100} times to be exact.)</Heading> : null}
                     </CardBody>
-                    <CardFooter pad={{horizontal: "small"}} background="light-2">   
+                    <CardFooter pad={{horizontal: "small"}} background="light-2"> 
                     </CardFooter>
                 </Card>
 

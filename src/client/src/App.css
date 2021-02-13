@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: #F8F8F8;
 }
 
 .App-logo {
@@ -39,4 +40,13 @@
 
 .map-container{
   height: 50%;
+}
+
+.top-menu{
+  position: relative;
+  z-index: 999;
+}
+
+.bottom-layer{
+  z-index: 0;
 }

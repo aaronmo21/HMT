@@ -1,7 +1,7 @@
 # How Many Texases?
 
 This project was born out of the age-old question, "How many times could Texas fit into it?"
-Thus HMT was born. Look no further, now you can know for sure!
+With this app, now you can know! it's as simple as selecting 2 locations (any country, territory, or US state is supported) and clicking calculate! We will tell you exactly how many times location A can fit into location B.
 
 ## Available Scripts
 
@@ -18,12 +18,12 @@ You will also see any lint errors in the console.
 ## Technologies used:
 
 This project was created using:
-React
-Node.js
-Express
-MongoDB
-React-leaflet
-Grommet themes and components
-REST API calls
-React-router (pending)
-GEOJSON map data
+# React
+# Node.js
+# Express
+# MongoDB
+# React-leaflet
+# Grommet themes and components
+# REST API calls
+# React-router (pending)
+# GEOJSON map data

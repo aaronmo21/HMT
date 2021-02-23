@@ -18,12 +18,12 @@ You will also see any lint errors in the console.
 ## Technologies used:
 
 This project was created using:
-# React
-# Node.js
-# Express
-# MongoDB
-# React-leaflet
-# Grommet themes and components
-# REST API calls
-# React-router (pending)
-# GEOJSON map data
+#### React
+#### Node.js
+#### Express
+#### MongoDB
+#### React-leaflet
+#### Grommet themes and components
+#### REST API calls
+#### React-router (pending)
+#### GEOJSON map data

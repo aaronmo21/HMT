@@ -1,5 +1,5 @@
 {
-  "name": "HMT",
+  "name": "hmt",
   "version": "1.0.0",
   "scripts": {
     "client": "cd src/client && npm start",

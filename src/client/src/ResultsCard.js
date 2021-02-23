@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardBody, CardFooter, CardHeader, Button, Form, FormField, TextInput, Box, Select, Heading } from 'grommet';
+import { Card, CardBody, CardFooter, CardHeader, Heading } from 'grommet';
 
 
 class ResultsCard extends Component {

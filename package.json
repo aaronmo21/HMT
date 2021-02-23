@@ -1,5 +1,5 @@
 {
-  "name": "example-create-react-app-express",
+  "name": "HMT",
   "version": "1.0.0",
   "scripts": {
     "client": "cd src/client && npm start",

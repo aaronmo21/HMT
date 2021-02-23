@@ -7,42 +7,35 @@ import { Map, GeoJSON } from "react-leaflet";
 import mapData from "./mapdata/countries.json";
 import "leaflet/dist/leaflet.css"
 import ResultsCard from './ResultsCard';
-import Legend from './Legend'
+import RadioLocationSelect from './RadioLocationSelect'
 
 
 class App extends Component {
   constructor(props){
-    super(props);
-    this.highlightLocation = this.highlightLocation.bind(this);
+    super(props)
+    this.selectLocation = this.selectLocation.bind(this);
+    this.radioLocation = this.radioLocation.bind(this);
     this.state = {
       locationList: [],
       locationSearchRes: [],
       entry1: [],
       entry2: [],
-      setShowResults: false,
       result: [],
       showCustomEntry: false,
       decimalBlurb: false,
-
+      locationSelection: 0,
+      prevSelection1: [],
+      prevSelection2: [],
+      unit: ''
     }
   }
   
-
   countryStyle = {
     fillColor: "#7D4CDB",
     fillOpacity: 1,
     color: "black",
     weight: 1
   };
-
-  //require 2 selections lmao wtf
-
-  //lastClicked variable when nextClicked = lastClicked undo selection
-  //when nextClicked != lastClicked 
-
-  //states: 0 to firstSelection, firstSelection to secondSelection, secondSelection to ready
-  //
-
 
   getResponse = async() => {
     const response = await fetch('http://localhost:5000/locations');
@@ -52,14 +45,47 @@ class App extends Component {
     return body;
   }
 
-  highlightLocation = (event) => {
-    event.target.setStyle({
-      color: "#66ff00",
-      fillColor: "#6FFFB0"
-    })
-    console.log(this.state.locationList);
-    let mapClickedlocation1 = this.state.locationList.find(o => o.name === event.target.feature.properties.ADMIN);
-    this.setState({entry1: mapClickedlocation1})
+  radioLocation = (x) => {
+    this.setState({ locationSelection: x });
+  }
+
+  //CONSOLIDATE THIS FUNCTION
+  selectLocation = (event) => {
+    //check which location is being selected
+    if(this.state.locationSelection === '1'){
+      //check previous target, to change colors
+      if(this.state.prevSelection1.target !== undefined){
+        this.state.prevSelection1.target.setStyle({
+          color: "black",
+          fillColor: "#7D4CDB"
+        })
+      }
+      //set the previous selection to the current selection
+      this.setState({prevSelection1: event})
+      event.target.setStyle({
+        color: "#66ff00",
+        fillColor: "#6FFFB0"
+      })
+      //fill select box with selection
+      let mapClickedlocation1 = this.state.locationList.find(o => o.name === event.target.feature.properties.ADMIN);
+      this.setState({entry1: mapClickedlocation1})
+    }
+    //same logic, for selection 2
+    else if(this.state.locationSelection === '2'){
+      if(this.state.prevSelection2.target !== undefined){
+        this.state.prevSelection2.target.setStyle({
+          color: "black",
+          fillColor: "#7D4CDB"
+        })
+      }
+      this.setState({prevSelection2: event})
+      event.target.setStyle({
+        color: "#3D138D",
+        fillColor: "#FD6FFF"
+      })
+      let mapClickedlocation2 = this.state.locationList.find(o => o.name === event.target.feature.properties.ADMIN);
+      this.setState({entry2: mapClickedlocation2})
+    }   
   }
 
   onEachLocation = (location, layer) => {
@@ -69,9 +95,11 @@ class App extends Component {
 
     layer.on({
       mouseover: (event) => {
-        layer.bindPopup(event.target.feature.properties.ADMIN);
+        const locationNameMouse = event.target.feature.properties.ADMIN;
+        //console.log(locationNameMouse);
+        layer.bindPopup(locationNameMouse);
       },
-      click: this.highlightLocation
+      click: this.selectLocation
     })
   }
 
@@ -82,13 +110,19 @@ class App extends Component {
         this.setState({decimalBlurb: true});
       }      
     }
-    this.setState({ result: temp,
+    this.setState({ 
+      result: temp,
       locationList: this.state.locationSearchRes,
       showResults: true });
   }
 
-  setShow = (x) => {
-    this.setState({showCustomEntry: x, showResults: x})
+  setShow = (menu, x) => {
+    if(menu === 'customEntry'){
+      this.setState({showCustomEntry: x,})
+    }
+    else if(menu === 'results'){
+      this.setState({showResults: x})
+    }
   }
 
   componentDidMount() {
@@ -104,7 +138,6 @@ class App extends Component {
   render() {
     const {locationList, locationSearchRes, entry1, entry2, result, showCustomEntry, showResults, decimalBlurb} = this.state;
     const texas = locationList.find(o => o.name === 'Texas');
-    console.log(texas)
     return (
       <Grommet theme={grommet}>
         <div className="App">
@@ -128,7 +161,7 @@ class App extends Component {
                     data={mapData.features}
                     onEachFeature={this.onEachLocation}
                   />
-                  <Legend />
+                  <RadioLocationSelect radioLocation={this.radioLocation} />
                 </Map>
             </div>
             </Box>
@@ -186,11 +219,11 @@ class App extends Component {
               </div>
               <Paragraph>?</Paragraph>
               <Button primary margin="small" size="small" label="Calculate" onClick={this.onCalculate} />
-              <Button primary margin="small" size="small" label="Custom Entry" onClick={() => this.setShow(true)} />
+              <Button primary margin="small" size="small" label="Custom Entry" onClick={() => this.setShow('customEntry', true)} />
               {showCustomEntry ? 
                 <Layer
-                    onEsc={() => this.setShow(false)}
-                    onClickOutside={() => this.setShow(false)}
+                    onEsc={() => this.setShow('customEntry', false)}
+                    onClickOutside={() => this.setShow('customEntry', false)}
                 >
                     <CustomEntryCard> </CustomEntryCard>
                   </Layer>
@@ -200,8 +233,8 @@ class App extends Component {
             <Box>
               { showResults ?
               <Layer
-                onEsc={() => this.setShow(false)}
-                onClickOutside={() => this.setShow(false)}
+                onEsc={() => this.setShow('results', false)}
+                onClickOutside={() => this.setShow('results', false)}
               >
                 <ResultsCard entry1={entry1} entry2={entry2} result={result} decimalBlurb={decimalBlurb} />
               </Layer>

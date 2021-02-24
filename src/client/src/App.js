@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
-import { Anchor, Nav, Button, Grommet, Header, Box, Markdown, Main, Heading, Paragraph, Select, Layer } from 'grommet';
+import { Anchor, Nav, Button, Grommet, Header, Box, Markdown, Main, Heading, Paragraph, Select, Layer, RadioButtonGroup } from 'grommet';
 import { grommet } from 'grommet/themes';
 import CustomEntryCard from './CustomEntryCard';
 import { Map, GeoJSON } from "react-leaflet";
@@ -8,6 +8,7 @@ import mapData from "./mapdata/countries.json";
 import "leaflet/dist/leaflet.css"
 import ResultsCard from './ResultsCard';
 import RadioLocationSelect from './RadioLocationSelect'
+import { padding } from 'polished';
 
 
 class App extends Component {
@@ -90,13 +91,11 @@ class App extends Component {
 
   onEachLocation = (location, layer) => {
     const locationName = location.properties.ADMIN;
-    //console.log(location.properties.ADMIN);
     layer.bindPopup(locationName);
 
     layer.on({
       mouseover: (event) => {
         const locationNameMouse = event.target.feature.properties.ADMIN;
-        //console.log(locationNameMouse);
         layer.bindPopup(locationNameMouse);
       },
       click: this.selectLocation
@@ -114,6 +113,10 @@ class App extends Component {
       result: temp,
       locationList: this.state.locationSearchRes,
       showResults: true });
+  }
+
+  setRadioValue = (x) => {
+    this.setState({unit: x})
   }
 
   setShow = (menu, x) => {
@@ -153,7 +156,6 @@ class App extends Component {
           </Header>
           
           <Main pad="large">
-            <Box>
             <div className="map-container" style={{height: '30%'}}>
                 <Map className="bottom-layer" style={{ height: "60vh" }} zoom={5} minZoom={2} center={[31, -100]} >
                   <GeoJSON
@@ -164,11 +166,10 @@ class App extends Component {
                   <RadioLocationSelect radioLocation={this.radioLocation} />
                 </Map>
             </div>
-            </Box>
-            <Box>
-              <Heading>have u ever wondered...</Heading>
-            </Box>
-            <Box direction="row">
+            <div className="main-content">
+              <Heading>have you ever wondered...</Heading>
+            </div>
+            <div className="main-content">
               <div>
                 <Paragraph>...how many times could</Paragraph>
               </div>
@@ -218,7 +219,16 @@ class App extends Component {
                 />
               </div>
               <Paragraph>?</Paragraph>
-              <Button primary margin="small" size="small" label="Calculate" onClick={this.onCalculate} />
+              <div className="main-content" >
+                <RadioButtonGroup 
+                  pad="10px"
+                  gap="3px"
+                  name="units"
+                  options={['mi', 'km']}
+                  onChange={(event) => this.setRadioValue(event.target.value)}
+                />
+              </div>
+              <Button primary margin="small" size="small" label="Calculate" disabled={entry1.length < 1 || entry2.length < 1 ? true : false} onClick={this.onCalculate} />
               <Button primary margin="small" size="small" label="Custom Entry" onClick={() => this.setShow('customEntry', true)} />
               {showCustomEntry ? 
                 <Layer
@@ -229,7 +239,7 @@ class App extends Component {
                   </Layer>
                   : null
                 }
-            </Box>
+            </div>
             <Box>
               { showResults ?
               <Layer

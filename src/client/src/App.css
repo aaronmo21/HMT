@@ -50,3 +50,12 @@
 .bottom-layer{
   z-index: 0;
 }
+
+.main-content{
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 640px) {
+  .main-content { display: flex; flex-flow: column; }
+}

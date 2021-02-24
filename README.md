@@ -25,5 +25,5 @@ This project was created using:
 #### React-leaflet
 #### Grommet themes and components
 #### REST API calls
-#### React-router (pending)
 #### GEOJSON map data
+#### React-router (pending)

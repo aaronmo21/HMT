@@ -54,7 +54,7 @@ import { Card, CardBody, CardFooter, CardHeader, Button, Form, FormField, TextIn
     const { value } = this.state;
     return (
         <Card  height="medium" align="center" width="large" background="light-1">
-            <CardHeader background="light-3" pad="medium">Custom Entry</CardHeader>
+            <CardHeader background="light-3" pad="medium">Custom Entry (developer use only)</CardHeader>
             <CardBody pad="medium">
                 <Form
                     value={value}
@@ -62,7 +62,7 @@ import { Card, CardBody, CardFooter, CardHeader, Button, Form, FormField, TextIn
                     onReset={() => this.setValue({})}
                     onSubmit={this.submitHandler}
                 >
-                    <Box direction="row" gap="medium">
+                    <Box className="main-content" direction="row" gap="medium">
                     <FormField name="id" htmlFor="id-input" label="ID">
                         <TextInput id="id-input-id" name="id"  />
                     </FormField> 
@@ -74,7 +74,7 @@ import { Card, CardBody, CardFooter, CardHeader, Button, Form, FormField, TextIn
                     </FormField>
                     </Box>
 
-                    <Box direction="row" gap="medium">
+                    <Box className="main-content" direction="row" gap="medium">
                     <FormField name="type" htmlFor="type-input" label="Type (state or country)">
                         <TextInput id="type-input-id" name="type" />
                     </FormField>
@@ -83,7 +83,7 @@ import { Card, CardBody, CardFooter, CardHeader, Button, Form, FormField, TextIn
                     </FormField>
                     </Box>
 
-                    <Box direction="row" align="center" gap="medium">
+                    <Box className="main-content" direction="row" align="center" gap="medium">
                         <Button type="submit" primary label="Submit" />
                         <Button type="reset" label="Reset" />
                     </Box>

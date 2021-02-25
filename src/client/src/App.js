@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import './App.css';
 import { Anchor, Nav, Button, Grommet, Header, Box, Markdown, Main, Heading, Paragraph, Select, Layer, RadioButtonGroup } from 'grommet';
 import { grommet } from 'grommet/themes';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import CustomEntryCard from './CustomEntryCard';
 import { Map, GeoJSON } from "react-leaflet";
 import mapData from "./mapdata/countries.json";
 import "leaflet/dist/leaflet.css"
 import ResultsCard from './ResultsCard';
 import RadioLocationSelect from './RadioLocationSelect'
-import { padding } from 'polished';
 
 
 class App extends Component {
@@ -147,7 +147,7 @@ class App extends Component {
           <Header className="App-header" pad="small" align="center">
             <Nav direction="row">
               <Anchor label="Home" href="#" />
-              <Anchor label="Countries" href="#" />
+              <Anchor label="Custom Entry" onClick={() => this.setShow('customEntry', true)} />
             </Nav>
             <Paragraph>this is using the mercator projection.</Paragraph>
             <Box align="center">
@@ -219,7 +219,7 @@ class App extends Component {
                 />
               </div>
               <Paragraph>?</Paragraph>
-              <div className="main-content" >
+              {/* <div className="main-content" >
                 <RadioButtonGroup 
                   pad="10px"
                   gap="3px"
@@ -227,9 +227,8 @@ class App extends Component {
                   options={['mi', 'km']}
                   onChange={(event) => this.setRadioValue(event.target.value)}
                 />
-              </div>
-              <Button primary margin="small" size="small" label="Calculate" disabled={entry1.length < 1 || entry2.length < 1 ? true : false} onClick={this.onCalculate} />
-              <Button primary margin="small" size="small" label="Custom Entry" onClick={() => this.setShow('customEntry', true)} />
+              </div> */}
+              <Button primary margin="small" size="small" label="Calculate" disabled={(entry1 === undefined || entry1.length < 1) || (entry2 === undefined || entry2.length < 1) ? true : false} onClick={this.onCalculate} />
               {showCustomEntry ? 
                 <Layer
                     onEsc={() => this.setShow('customEntry', false)}

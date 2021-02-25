@@ -59,3 +59,8 @@
 @media (max-width: 640px) {
   .main-content { display: flex; flex-flow: column; }
 }
+
+.rows{
+  display: flex; 
+  flex-flow: column;
+}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Anchor, Nav, Button, Grommet, Header, Box, Markdown, Main, Heading, Paragraph, Select, Layer, RadioButtonGroup } from 'grommet';
+import { Anchor, Nav, Header, Box, Markdown, Paragraph } from 'grommet';
 
 
 class Navbar extends Component {

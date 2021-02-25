@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Home from "./Home"
 import Navbar from "./Navbar"
 import { grommet } from 'grommet/themes';
-import { Anchor, Nav, Button, Grommet, Header, Box, Markdown, Main, Heading, Paragraph, Select, Layer, RadioButtonGroup } from 'grommet';
+import { Grommet } from 'grommet';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import LocationsPage from './LocationsPage';
 

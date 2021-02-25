@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
-import { Anchor, Nav, Button, Grommet, Header, Box, Markdown, Main, Heading, Paragraph, Select, Layer, RadioButtonGroup } from 'grommet';
-import { grommet } from 'grommet/themes';
+import { Button, Box, Main, Heading, Paragraph, Select, Layer, RadioButtonGroup } from 'grommet';
 import CustomEntryCard from './CustomEntryCard';
 import { Map, GeoJSON } from "react-leaflet";
 import mapData from "./mapdata/countries.json";
@@ -141,19 +140,7 @@ class Home extends Component {
     const {locationList, locationSearchRes, entry1, entry2, result, showCustomEntry, showResults, decimalBlurb} = this.state;
     const texas = locationList.find(o => o.name === 'Texas');
     return (
-      //<Grommet theme={grommet}>
         <div>
-          {/* <Header className="App-header" pad="small" align="center">
-            <Nav direction="row">
-              <Anchor label="Home" href="#" />
-              <Anchor label="Custom Entry" onClick={() => this.setShow('customEntry', true)} />
-            </Nav>
-            <Paragraph>this is using the mercator projection.</Paragraph>
-            <Box align="center">
-              <Markdown align="center">how many texases?</Markdown>
-            </Box>
-          </Header> */}
-          
           <Main pad="large">
             <div className="map-container" style={{height: '30%'}}>
                 <Map className="bottom-layer" style={{ height: "60vh" }} zoom={5} minZoom={2} center={[31, -100]} >
@@ -250,7 +237,6 @@ class Home extends Component {
             </Box>
           </Main>
         </div>
-      //</Grommet>
     );
   }
 }

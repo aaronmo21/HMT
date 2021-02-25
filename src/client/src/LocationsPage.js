@@ -4,7 +4,7 @@ class LocationsPage extends Component {
     render() {
         return (
             <div>
-                <h1>this is a new page, congrates</h1>
+                <h1>location table goes here</h1>
             </div>
         );
     }

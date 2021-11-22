@@ -30,6 +30,10 @@ This project was created using:
 #### GEOJSON map data
 #### React-router
 
+## DB Schema
+The data fetched by the app is stored in MongoDB under a locations object containing each location:
+![image](https://user-images.githubusercontent.com/34074169/142946443-80e3556f-b2f6-4d0f-944e-67118627aef1.png)
+
 ## Current progress:
 This project currently supports usage for 56 countries, Alphabetically from Afghanistan to Estonia. More countries are on the way!
 
